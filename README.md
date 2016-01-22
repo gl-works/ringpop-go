@@ -28,6 +28,7 @@ To run the test you need both `thrift` and `thrift-gen` on your path. On OSX you
 can install them with the following commands:
 
 ```bash
+go get github.com/vektra/mockery/.../
 brew install thrift
 go get github.com/uber/tchannel-go/thrift/thrift-gen
 ```
