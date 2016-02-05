@@ -83,13 +83,13 @@ func (s *MemberTestSuite) TestNonLocalOverride() {
 			c := newChange(s.localAddr, s2)
 			expected := j > i
 			got := m.nonLocalOverride(c)
-			s.Equal(expected, got, "expected override iff j > i")
+			s.Equal(expected, got, "expected override if and only if j > i")
 
 			m = newMember(s.nonLocalAddr, s1)
 			c = newChange(s.nonLocalAddr, s2)
 			expected = j > i
 			got = m.nonLocalOverride(c)
-			s.Equal(expected, got, "expected override iff j > i")
+			s.Equal(expected, got, "expected override if and only if j > i")
 		}
 	}
 }
