@@ -22,6 +22,7 @@ package ringpop
 
 import (
 	"errors"
+	"time"
 
 	log "github.com/uber-common/bark"
 	"github.com/uber/ringpop-go/hashring"
@@ -35,6 +36,11 @@ type configuration struct {
 	// that App is taken as an argument of the Ringpop constructor and not a
 	// configuration option. This is to prevent accidental misconfiguration.
 	App string
+
+	// Configure the period by which ringpop emits the stat
+	// "ring.checksum-periodic". See func RingChecksumStatPeriod for
+	// specifics.
+	RingChecksumStatPeriod time.Duration
 }
 
 // An Option is a modifier functions that configure/modify a real Ringpop
@@ -177,6 +183,25 @@ func IdentityResolverFunc(resolver IdentityResolver) Option {
 	}
 }
 
+// Installs RingChecksumStatPeriod, which determines the period between
+// emissions of the stat 'ring.checksum-periodic'. Using a value <=0 will
+// disable emissino of this stat. Using a value in (0, 10ms) will return an
+// error, as that value is unrealistically small. Normal values must therefore
+// be >=10ms.
+func RingChecksumStatPeriod(period time.Duration) Option {
+	return func(r *Ringpop) error {
+		if period <= 0 {
+			period = -1
+		}
+		// sanity check; never allow < 10ms
+		if period > 0 && period < 10*time.Millisecond {
+			return errors.New("RingChecksumStatPeriod invalid below 10 ms")
+		}
+		r.config.RingChecksumStatPeriod = period
+		return nil
+	}
+}
+
 // Default options
 
 // defaultIdentityResolver sets the default identityResolver
@@ -206,6 +231,10 @@ func defaultHashRingOptions(r *Ringpop) error {
 	return HashRingConfig(defaultHashRingConfiguration)(r)
 }
 
+func defaultRingChecksumStatPeriod(r *Ringpop) error {
+	return RingChecksumStatPeriod(5 * time.Second)(r)
+}
+
 // defaultOptions are the default options/values when Ringpop is created. They
 // can be overridden at runtime.
 var defaultOptions = []Option{
@@ -213,6 +242,7 @@ var defaultOptions = []Option{
 	defaultLogLevels,
 	defaultStatter,
 	defaultHashRingOptions,
+	defaultRingChecksumStatPeriod,
 }
 
 var defaultHashRingConfiguration = &hashring.Configuration{
