@@ -195,6 +195,22 @@ func (s *BootstrapTestSuite) TestMalformedJSONFile() {
 	s.Error(err, "invalid character 'T' looking for beginning of value", "should fail to unmarhsal JSON")
 }
 
+func (s *BootstrapTestSuite) TestDisseminationCounterAfterBootstrap() {
+	s.peers = genChannelNodes(s.T(), 10)
+	bootstrapList := bootstrapNodes(s.T(), s.peers...)
+	waitForConvergence(s.T(), 5*time.Second, s.peers...)
+
+	s.node.Bootstrap(&BootstrapOptions{
+		Hosts:   bootstrapList,
+		Stopped: true,
+	})
+	waitForConvergence(s.T(), 5*time.Second, append(s.peers, s.tnode)...)
+
+	// there are 11 nodes in total, log10(11) rounded up is 2
+	expected := 2 * s.node.disseminator.pFactor
+	s.Equal(expected, s.node.disseminator.maxP)
+}
+
 func TestBootstrapTestSuite(t *testing.T) {
 	suite.Run(t, new(BootstrapTestSuite))
 }
