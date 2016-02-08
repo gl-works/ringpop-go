@@ -180,6 +180,13 @@ func (s *RingpopOptionsTestSuite) TestMissingIdentityResolver() {
 	s.Error(err)
 }
 
+// TestClockNil confirms that nil clock option returns an error.
+func (s *RingpopOptionsTestSuite) TestClockNil() {
+	rp, err := New("test", Clock(nil))
+	s.Nil(rp)
+	s.Error(err)
+}
+
 // TestDefaultRingChecksumStatPeriod confirms that default gets installed.
 func (s *RingpopOptionsTestSuite) TestDefaultRingChecksumStatPeriod() {
 	rp, err := New("test", Channel(s.channel))
@@ -191,12 +198,15 @@ func (s *RingpopOptionsTestSuite) TestDefaultRingChecksumStatPeriod() {
 func (s *RingpopOptionsTestSuite) TestDisabledRingChecksumStat() {
 	tchan := Channel(s.channel)
 
-	rp, err := New("test", tchan, RingChecksumStatPeriod(0))
+	rp, err := New("test", tchan, RingChecksumStatPeriod(RingChecksumStatPeriodNever))
+	s.NoError(err)
+	s.Equal(rp.config.RingChecksumStatPeriod, RingChecksumStatPeriodNever)
+
+	rp, err = New("test", tchan, RingChecksumStatPeriod(0))
 	s.NoError(err)
 	s.Equal(rp.config.RingChecksumStatPeriod, RingChecksumStatPeriodNever)
 
 	rp, err = New("test", tchan, RingChecksumStatPeriod(-23))
-
 	s.NoError(err)
 	s.Equal(rp.config.RingChecksumStatPeriod, RingChecksumStatPeriodNever)
 }
@@ -208,7 +218,7 @@ func (s *RingpopOptionsTestSuite) TestSpecifiedRingChecksumStatPeriod() {
 	s.Equal(rp.config.RingChecksumStatPeriod, time.Duration(42*time.Second))
 }
 
-// TestTooSmallRingChecksumStatPeriod confirms that insane periods error.
+// TestTooSmallRingChecksumStatPeriod confirms that insane periods return error.
 func (s *RingpopOptionsTestSuite) TestTooSmallRingChecksumStatPeriod() {
 	rp, err := New("test", Channel(s.channel), RingChecksumStatPeriod(1*time.Nanosecond))
 	s.Nil(rp)

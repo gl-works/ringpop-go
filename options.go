@@ -84,12 +84,12 @@ func checkOptions(rp *Ringpop) []error {
 
 // Runtime options
 
-// Clock is used to set the Clock mechanism. Passing nil will use the system
-// clock. Testing harnesses will typically replace this with a mocked clock.
+// Clock is used to set the Clock mechanism.  Testing harnesses will typically
+// replace this with a mocked clock.
 func Clock(c clock.Clock) Option {
 	return func(r *Ringpop) error {
 		if c == nil {
-			r.clock = clock.New()
+			return errors.New("Clock is required")
 		} else {
 			r.clock = c
 		}
@@ -197,6 +197,14 @@ func IdentityResolverFunc(resolver IdentityResolver) Option {
 	}
 }
 
+// RingChecksumStatPeriodNever defines a "period" which disables
+// ring.checksum-periodic stat emission.
+const RingChecksumStatPeriodNever = time.Duration(-1)
+
+// RingChecksumStatPeriodDefault defines the default emission period for the
+// ring.checksum-periodic stat.
+const RingChecksumStatPeriodDefault = time.Duration(5 * time.Second)
+
 // RingChecksumStatPeriod configures the period between emissions of the stat
 // 'ring.checksum-periodic'. Using a value <=0 (or RingChecksumStatPeriodNever)
 // will disable emission of this stat. Using a value in (0, 10ms) will return
@@ -215,14 +223,6 @@ func RingChecksumStatPeriod(period time.Duration) Option {
 }
 
 // Default options
-
-// RingChecksumStatPeriodNever defines a "period" which disables
-// ring.checksum-periodic stat emission.
-const RingChecksumStatPeriodNever = time.Duration(-1)
-
-// RingChecksumStatPeriodDefault defines the default emission period for the
-// ring.checksum-periodic stat.
-const RingChecksumStatPeriodDefault = time.Duration(5 * time.Second)
 
 // defaultClock sets the ringpop clock interface to use the system clock
 func defaultClock(r *Ringpop) error {

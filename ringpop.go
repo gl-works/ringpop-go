@@ -165,7 +165,7 @@ func (rp *Ringpop) init() error {
 	rp.registerHandlers()
 
 	rp.node = swim.NewNode(rp.config.App, address, rp.subChannel, &swim.Options{
-		Clock: clock.New(),
+		Clock: rp.clock,
 	})
 	rp.node.RegisterListener(rp)
 
@@ -191,9 +191,9 @@ func (rp *Ringpop) startTimers() {
 	if rp.tickers != nil {
 		return
 	}
-	rp.tickers = make(chan *clock.Ticker, 1) // 1 == max number of ticker
+	rp.tickers = make(chan *clock.Ticker, 1) // 1 == max number of tickers
 
-	if rp.config.RingChecksumStatPeriod > 0 {
+	if rp.config.RingChecksumStatPeriod != RingChecksumStatPeriodNever {
 		ticker := rp.clock.Ticker(rp.config.RingChecksumStatPeriod)
 		rp.tickers <- ticker
 		go func() {

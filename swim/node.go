@@ -77,6 +77,7 @@ func mergeDefaultOptions(opts *Options) *Options {
 	def := defaultOptions()
 
 	if opts == nil {
+		// typically only in tests
 		def.Clock = clock.New()
 		return def
 	}
