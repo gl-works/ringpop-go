@@ -85,7 +85,7 @@ func checkOptions(rp *Ringpop) []error {
 // Runtime options
 
 // Clock is used to set the Clock mechanism. Passing nil will use the system
-// clock.  Testing harnesses will typically replace this with a mocked clock.
+// clock. Testing harnesses will typically replace this with a mocked clock.
 func Clock(c clock.Clock) Option {
 	return func(r *Ringpop) error {
 		if c == nil {
@@ -206,9 +206,7 @@ func RingChecksumStatPeriod(period time.Duration) Option {
 	return func(r *Ringpop) error {
 		if period <= 0 {
 			period = RingChecksumStatPeriodNever
-		}
-		// sanity check; never allow < 10ms
-		if period > 0 && period < 10*time.Millisecond {
+		} else if period < 10*time.Millisecond {
 			return errors.New("RingChecksumStatPeriod invalid below 10 ms")
 		}
 		r.config.RingChecksumStatPeriod = period
@@ -226,7 +224,7 @@ const RingChecksumStatPeriodNever = time.Duration(-1)
 // ring.checksum-periodic stat.
 const RingChecksumStatPeriodDefault = time.Duration(5 * time.Second)
 
-// defaultClock sets the default clock to system clock
+// defaultClock sets the ringpop clock interface to use the system clock
 func defaultClock(r *Ringpop) error {
 	return Clock(clock.New())(r)
 }
@@ -269,8 +267,8 @@ var defaultOptions = []Option{
 	defaultIdentityResolver,
 	defaultLogLevels,
 	defaultStatter,
-	defaultHashRingOptions,
 	defaultRingChecksumStatPeriod,
+	defaultHashRingOptions,
 }
 
 var defaultHashRingConfiguration = &hashring.Configuration{

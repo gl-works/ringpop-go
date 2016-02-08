@@ -45,6 +45,10 @@ func (s *RingpopOptionsTestSuite) SetupTest() {
 	s.channel = ch
 }
 
+func (s *RingpopOptionsTestSuite) TearDownTest() {
+	s.channel.Close()
+}
+
 // TestDefaults tests that the default options are applied to a Ringpop
 // instance during construction, when none are specified by the user.
 func (s *RingpopOptionsTestSuite) TestDefaults() {
@@ -176,20 +180,23 @@ func (s *RingpopOptionsTestSuite) TestMissingIdentityResolver() {
 	s.Error(err)
 }
 
-// TestDefaultRingChecksumStatPeriod confirms that a >0 default gets installed.
+// TestDefaultRingChecksumStatPeriod confirms that default gets installed.
 func (s *RingpopOptionsTestSuite) TestDefaultRingChecksumStatPeriod() {
 	rp, err := New("test", Channel(s.channel))
 	s.NoError(err)
-	s.True(rp.config.RingChecksumStatPeriod > 0)
+	s.Equal(rp.config.RingChecksumStatPeriod, RingChecksumStatPeriodDefault)
 }
 
-// TestDisabledRingChecksumStat confirms that disabled switch set -1.
+// TestDisabledRingChecksumStat confirms that disabled switch stays disabled.
 func (s *RingpopOptionsTestSuite) TestDisabledRingChecksumStat() {
-	rp, err := New("test", Channel(s.channel), RingChecksumStatPeriod(0))
+	tchan := Channel(s.channel)
+
+	rp, err := New("test", tchan, RingChecksumStatPeriod(0))
 	s.NoError(err)
 	s.Equal(rp.config.RingChecksumStatPeriod, RingChecksumStatPeriodNever)
 
-	rp, err = New("test", Channel(s.channel), RingChecksumStatPeriod(-23))
+	rp, err = New("test", tchan, RingChecksumStatPeriod(-23))
+
 	s.NoError(err)
 	s.Equal(rp.config.RingChecksumStatPeriod, RingChecksumStatPeriodNever)
 }
