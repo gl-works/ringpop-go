@@ -24,6 +24,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/benbjohnson/clock"
 	log "github.com/uber-common/bark"
 	"github.com/uber/ringpop-go/hashring"
 	"github.com/uber/ringpop-go/logging"
@@ -82,6 +83,19 @@ func checkOptions(rp *Ringpop) []error {
 }
 
 // Runtime options
+
+// Clock is used to set the Clock mechanism. Passing nil will use the system
+// clock.  Testing harnesses will typically replace this with a mocked clock.
+func Clock(c clock.Clock) Option {
+	return func(r *Ringpop) error {
+		if c == nil {
+			r.clock = clock.New()
+		} else {
+			r.clock = c
+		}
+		return nil
+	}
+}
 
 // Channel is used to provide a TChannel instance that Ringpop should use for
 // all communication.
@@ -212,6 +226,11 @@ const RingChecksumStatPeriodNever = time.Duration(-1)
 // ring.checksum-periodic stat.
 const RingChecksumStatPeriodDefault = time.Duration(5 * time.Second)
 
+// defaultClock sets the default clock to system clock
+func defaultClock(r *Ringpop) error {
+	return Clock(clock.New())(r)
+}
+
 // defaultIdentityResolver sets the default identityResolver
 func defaultIdentityResolver(r *Ringpop) error {
 	r.identityResolver = r.channelIdentityResolver
@@ -246,6 +265,7 @@ func defaultRingChecksumStatPeriod(r *Ringpop) error {
 // defaultOptions are the default options/values when Ringpop is created. They
 // can be overridden at runtime.
 var defaultOptions = []Option{
+	defaultClock,
 	defaultIdentityResolver,
 	defaultLogLevels,
 	defaultStatter,

@@ -53,7 +53,6 @@ func createSingleNodeCluster(rp *Ringpop) error {
 }
 
 func (s *RingpopTestSuite) SetupTest() {
-
 	ch, err := tchannel.NewChannel("test", nil)
 	s.NoError(err, "channel must create successfully")
 	s.channel = ch
@@ -563,4 +562,36 @@ func (s *RingpopTestSuite) TestErrorOnChannelNotListening() {
 
 func TestRingpopTestSuite(t *testing.T) {
 	suite.Run(t, new(RingpopTestSuite))
+}
+
+func (s *RingpopTestSuite) TestStartTimersIdempotance() {
+	// starts empty. note that we use empty here to not overspecify --
+	// whether it's nil or an empty slice isn't really relevant, so long as
+	// it behaves well.
+	s.Empty(s.ringpop.tickers)
+
+	// init should default to have at least 1 timer --
+	// RingChecksumStatPeriod
+	s.ringpop.init()
+	s.NotEmpty(s.ringpop.tickers)
+
+	// validate idemopotence of startTimers
+	s.ringpop.startTimers()
+
+	// destroy works, and leaves it empty
+	s.ringpop.Destroy()
+	s.Empty(s.ringpop.tickers)
+
+	// idempotent stop
+	s.ringpop.stopTimers()
+}
+
+func (s *RingpopTestSuite) TestRingChecksumEmitTimer() {
+	s.ringpop.init()
+	stats := newDummyStats()
+	s.ringpop.statter = stats
+	s.ringpop.clock.Sleep(6 * time.Second)
+	_, ok := stats.vals["ringpop.127_0_0_1_3001.ring.checksum-periodic"]
+	s.True(ok, "missing stats for checksums being computed")
+	s.ringpop.Destroy()
 }

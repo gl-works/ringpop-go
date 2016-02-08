@@ -31,6 +31,7 @@ import (
 	"time"
 
 	athrift "github.com/apache/thrift/lib/go/thrift"
+	"github.com/benbjohnson/clock"
 	"github.com/dgryski/go-farm"
 	log "github.com/uber-common/bark"
 	"github.com/uber/ringpop-go/events"
@@ -72,6 +73,8 @@ type Ringpop struct {
 
 	state      state
 	stateMutex sync.RWMutex
+
+	clock clock.Clock
 
 	channel    shared.TChannel
 	subChannel shared.SubChannel
@@ -161,7 +164,9 @@ func (rp *Ringpop) init() error {
 	rp.subChannel = rp.channel.GetSubChannel("ringpop", tchannel.Isolated)
 	rp.registerHandlers()
 
-	rp.node = swim.NewNode(rp.config.App, address, rp.subChannel, nil)
+	rp.node = swim.NewNode(rp.config.App, address, rp.subChannel, &swim.Options{
+		Clock: clock.New(),
+	})
 	rp.node.RegisterListener(rp)
 
 	rp.ring = hashring.New(farm.Fingerprint32, rp.configHashRing.ReplicaPoints)
