@@ -95,7 +95,7 @@ type Ringpop struct {
 
 	logger log.Logger
 
-	tickers   chan *time.Ticker
+	tickers   chan *clock.Ticker
 	startTime time.Time
 }
 
@@ -191,10 +191,10 @@ func (rp *Ringpop) startTimers() {
 	if rp.tickers != nil {
 		return
 	}
-	rp.tickers = make(chan *time.Ticker, 1) // 1 == max number of ticker
+	rp.tickers = make(chan *clock.Ticker, 1) // 1 == max number of ticker
 
 	if rp.config.RingChecksumStatPeriod > 0 {
-		ticker := time.NewTicker(rp.config.RingChecksumStatPeriod)
+		ticker := rp.clock.Ticker(rp.config.RingChecksumStatPeriod)
 		rp.tickers <- ticker
 		go func() {
 			for _ = range ticker.C {
