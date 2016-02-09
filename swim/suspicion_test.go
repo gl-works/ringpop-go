@@ -77,7 +77,7 @@ func (s *SuspicionTestSuite) TestSuspectMember() {
 }
 
 func (s *SuspicionTestSuite) TestSuspectLocal() {
-	s.s.Start(*s.m.local)
+	s.s.Start(s.m.local)
 	s.Nil(s.s.Timer(s.m.local.Address), "expected suspicion timer for local member to be nil")
 }
 
@@ -96,7 +96,7 @@ func (s *SuspicionTestSuite) TestSuspectBecomesFaulty() {
 	member, _ := s.m.Member(s.suspect.Address)
 	s.Require().NotNil(member, "expected cannot be nil")
 
-	s.s.Start(*member)
+	s.s.Start(member)
 	s.NotNil(s.s.Timer(member.Address), "expected suspicion timer to be set")
 
 	time.Sleep(5 * time.Millisecond)
@@ -115,7 +115,7 @@ func (s *SuspicionTestSuite) TestTimerCreated() {
 	s.Require().Nil(old, "expected timer to be nil")
 
 	// Start suspcision, which should create a timer
-	s.s.Start(*member)
+	s.s.Start(member)
 
 	s.NotEqual(old, s.s.Timer(member.Address), "expected timer to change")
 }

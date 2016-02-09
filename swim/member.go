@@ -50,11 +50,11 @@ type Member struct {
 }
 
 // suspect interface
-func (m Member) address() string {
+func (m *Member) address() string {
 	return m.Address
 }
 
-func (m Member) incarnation() int64 {
+func (m *Member) incarnation() int64 {
 	return m.Incarnation
 }
 
