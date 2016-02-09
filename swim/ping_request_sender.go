@@ -161,7 +161,7 @@ func sendPingRequests(node *Node, target string, size int, timeout time.Duration
 	for _, peer := range peers {
 		wg.Add(1)
 
-		go func(peer Member) {
+		go func(peer *Member) {
 			defer wg.Done()
 
 			p := newPingRequestSender(node, peer.Address, target, timeout)
@@ -195,7 +195,7 @@ func sendPingRequests(node *Node, target string, size int, timeout time.Duration
 			})
 
 			resC <- res
-		}(*peer)
+		}(peer)
 	}
 
 	// wait for all sends to complete before closing channel
