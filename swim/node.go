@@ -67,7 +67,7 @@ func defaultOptions() *Options {
 		RollupFlushInterval: 5000 * time.Millisecond,
 		RollupMaxUpdates:    250,
 
-		Clock: nil,
+		Clock: clock.New(),
 	}
 
 	return opts
@@ -77,8 +77,6 @@ func mergeDefaultOptions(opts *Options) *Options {
 	def := defaultOptions()
 
 	if opts == nil {
-		// typically only in tests
-		def.Clock = clock.New()
 		return def
 	}
 
@@ -102,7 +100,7 @@ func mergeDefaultOptions(opts *Options) *Options {
 		def.PingRequestSize)
 
 	if opts.Clock == nil {
-		opts.Clock = clock.New()
+		opts.Clock = def.Clock
 	}
 
 	return opts
