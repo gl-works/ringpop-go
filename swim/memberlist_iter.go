@@ -63,7 +63,7 @@ func (i *memberlistIter) Next() (*Member, bool) {
 		member := i.m.MemberAt(i.currentIndex)
 		visited[member.Address] = true
 
-		if i.m.Pingable(*member) {
+		if i.m.Pingable(member) {
 			return member, true
 		}
 	}

@@ -125,7 +125,7 @@ func (m *memberlist) NumMembers() int {
 }
 
 // returns whether or not a member is pingable
-func (m *memberlist) Pingable(member Member) bool {
+func (m *memberlist) Pingable(member *Member) bool {
 	return member.Address != m.local.Address &&
 		(member.Status == Alive || member.Status == Suspect)
 
@@ -135,7 +135,7 @@ func (m *memberlist) Pingable(member Member) bool {
 func (m *memberlist) NumPingableMembers() (n int) {
 	m.members.Lock()
 	for _, member := range m.members.list {
-		if m.Pingable(*member) {
+		if m.Pingable(member) {
 			n++
 		}
 	}
@@ -150,7 +150,7 @@ func (m *memberlist) RandomPingableMembers(n int, excluding map[string]bool) []*
 
 	m.members.RLock()
 	for _, member := range m.members.list {
-		if m.Pingable(*member) && !excluding[member.Address] {
+		if m.Pingable(member) && !excluding[member.Address] {
 			members = append(members, member)
 		}
 	}
