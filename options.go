@@ -74,10 +74,10 @@ func applyOptions(r *Ringpop, opts []Option) error {
 func checkOptions(rp *Ringpop) []error {
 	errs := []error{}
 	if rp.channel == nil {
-		errs = append(errs, errors.New("Channel is required"))
+		errs = append(errs, errors.New("channel is required"))
 	}
 	if rp.identityResolver == nil {
-		errs = append(errs, errors.New("Identity resolver is nil"))
+		errs = append(errs, errors.New("identity resolver is nil"))
 	}
 	return errs
 }
@@ -89,7 +89,7 @@ func checkOptions(rp *Ringpop) []error {
 func Clock(c clock.Clock) Option {
 	return func(r *Ringpop) error {
 		if c == nil {
-			return errors.New("Clock is required")
+			return errors.New("clock is required")
 		} else {
 			r.clock = c
 		}
@@ -215,7 +215,7 @@ func RingChecksumStatPeriod(period time.Duration) Option {
 		if period <= 0 {
 			period = RingChecksumStatPeriodNever
 		} else if period < 10*time.Millisecond {
-			return errors.New("RingChecksumStatPeriod invalid below 10 ms")
+			return errors.New("ring checksum stat period invalid below 10 ms")
 		}
 		r.config.RingChecksumStatPeriod = period
 		return nil
