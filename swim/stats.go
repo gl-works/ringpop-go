@@ -25,7 +25,7 @@ import (
 	"time"
 )
 
-type members []Member
+type members []*Member
 
 // These methods exist to satisfy the sort.Interface for sorting.
 func (s *members) Len() int           { return len(*s) }
@@ -34,8 +34,8 @@ func (s *members) Swap(i, j int)      { (*s)[i], (*s)[j] = (*s)[j], (*s)[i] }
 
 // MemberStats contains members in a memberlist and the checksum of those members
 type MemberStats struct {
-	Checksum uint32   `json:"checksum"`
-	Members  []Member `json:"members"`
+	Checksum uint32    `json:"checksum"`
+	Members  []*Member `json:"members"`
 }
 
 // MemberStats returns the current checksum of the node's memberlist and a slice

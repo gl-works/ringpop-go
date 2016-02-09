@@ -166,10 +166,10 @@ func (m *memberlist) RandomPingableMembers(n int, excluding map[string]bool) []*
 }
 
 // returns an immutable slice of members representing the current state of the membership
-func (m *memberlist) GetMembers() (members []Member) {
+func (m *memberlist) GetMembers() (members []*Member) {
 	m.members.RLock()
 	for _, member := range m.members.list {
-		members = append(members, *member)
+		members = append(members, member)
 	}
 	m.members.RUnlock()
 
