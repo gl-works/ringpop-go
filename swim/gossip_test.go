@@ -97,11 +97,11 @@ func (s *GossipTestSuite) TestUpdatesArePropagated() {
 
 	s.g.ProtocolPeriod()
 
-	expectedMembers := []Member{
-		Member{Address: "127.0.0.1:3003", Status: Alive},
-		Member{Address: "127.0.0.1:3004", Status: Faulty},
-		Member{Address: "127.0.0.1:3005", Status: Suspect},
-		Member{Address: "127.0.0.1:3006", Status: Leave},
+	expectedMembers := []*Member{
+		&Member{Address: "127.0.0.1:3003", Status: Alive},
+		&Member{Address: "127.0.0.1:3004", Status: Faulty},
+		&Member{Address: "127.0.0.1:3005", Status: Suspect},
+		&Member{Address: "127.0.0.1:3006", Status: Leave},
 	}
 
 	memberlistHasMembers(s.T(), s.node.memberlist, expectedMembers)

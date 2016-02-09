@@ -131,7 +131,7 @@ func genChannelNodes(t *testing.T, n int) (nodes []*testNode) {
 	return
 }
 
-func memberlistHasMembers(t *testing.T, m *memberlist, members []Member) {
+func memberlistHasMembers(t *testing.T, m *memberlist, members []*Member) {
 	for _, expected := range members {
 		member, ok := m.Member(expected.Address)
 		require.NotNil(t, member, "member cannot be nil")
