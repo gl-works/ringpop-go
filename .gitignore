@@ -2,3 +2,5 @@
 testpop
 hosts.json
 coverage.out
+.idea
+*.iml

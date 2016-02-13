@@ -437,7 +437,7 @@ func (n *Node) setPinging(pinging bool) {
 func (n *Node) pingNextMember() {
 	member, ok := n.memberiter.Next()
 	if !ok {
-		n.logger.Warn("no pingable members")
+		n.logger.Debug("no pingable members")
 		return
 	}
 
