@@ -12,7 +12,7 @@ Getting started
 To install ringpop-go:
 
 ```
-go get github.com/uber/ringpop-go
+go get github.com/gl-works/ringpop-go
 ```
 
 Developing

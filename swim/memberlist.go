@@ -31,7 +31,7 @@ import (
 
 	"github.com/benbjohnson/clock"
 	"github.com/dgryski/go-farm"
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/util"
 )
 
 // A memberlist contains the membership for a node

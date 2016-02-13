@@ -23,7 +23,7 @@ package forward
 import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"github.com/uber/ringpop-go/shared"
+	"github.com/gl-works/ringpop-go/shared"
 	"github.com/uber/tchannel-go"
 	"testing"
 )

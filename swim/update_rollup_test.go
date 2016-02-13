@@ -26,7 +26,7 @@ import (
 
 	"github.com/benbjohnson/clock"
 	"github.com/stretchr/testify/suite"
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/util"
 )
 
 type RollupTestSuite struct {

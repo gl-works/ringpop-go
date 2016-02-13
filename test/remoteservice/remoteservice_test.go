@@ -6,15 +6,15 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/uber/ringpop-go/router"
-	"github.com/uber/ringpop-go/test/mocks"
-	servicemocks "github.com/uber/ringpop-go/test/remoteservice/mocks"
+	"github.com/gl-works/ringpop-go/router"
+	"github.com/gl-works/ringpop-go/test/mocks"
+	servicemocks "github.com/gl-works/ringpop-go/test/remoteservice/mocks"
 	"github.com/uber/tchannel-go"
 	"github.com/uber/tchannel-go/thrift"
 )
 
 //go:generate mkdir -p .gen/go
-//go:generate thrift-gen --generateThrift --outputDir .gen/go --inputFile remoteservice.thrift --template github.com/uber/ringpop-go/ringpop.thrift-gen
+//go:generate thrift-gen --generateThrift --outputDir .gen/go --inputFile remoteservice.thrift --template github.com/gl-works/ringpop-go/ringpop.thrift-gen
 //go:generate cp -R .gen/go/remoteservice ../
 //go:generate rm -rf .gen
 //go:generate mockery --name=TChanRemoteService

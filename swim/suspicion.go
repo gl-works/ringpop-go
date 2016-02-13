@@ -25,7 +25,7 @@ import (
 	"time"
 
 	log "github.com/uber-common/bark"
-	"github.com/uber/ringpop-go/logging"
+	"github.com/gl-works/ringpop-go/logging"
 )
 
 type suspect interface {

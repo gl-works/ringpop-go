@@ -25,7 +25,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/suite"
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/util"
 )
 
 type SuspicionTestSuite struct {

@@ -25,8 +25,8 @@ import (
 	"regexp"
 
 	"github.com/uber-common/bark"
-	"github.com/uber/ringpop-go"
-	"github.com/uber/ringpop-go/swim"
+	"github.com/gl-works/ringpop-go"
+	"github.com/gl-works/ringpop-go/swim"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/uber/tchannel-go"

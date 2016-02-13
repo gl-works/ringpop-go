@@ -26,8 +26,8 @@ import (
 
 	"github.com/benbjohnson/clock"
 	log "github.com/uber-common/bark"
-	"github.com/uber/ringpop-go/logging"
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/logging"
+	"github.com/gl-works/ringpop-go/util"
 )
 
 var timeZero = time.Date(1, 1, 1, 0, 0, 0, 0, time.UTC)

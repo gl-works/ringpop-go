@@ -4,10 +4,10 @@ import "github.com/stretchr/testify/mock"
 
 import "time"
 
-import "github.com/uber/ringpop-go/events"
-import "github.com/uber/ringpop-go/forward"
+import "github.com/gl-works/ringpop-go/events"
+import "github.com/gl-works/ringpop-go/forward"
 
-import "github.com/uber/ringpop-go/swim"
+import "github.com/gl-works/ringpop-go/swim"
 
 import "github.com/uber/tchannel-go"
 

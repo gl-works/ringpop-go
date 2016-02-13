@@ -26,8 +26,8 @@ import (
 
 	log "github.com/uber-common/bark"
 
-	"github.com/uber/ringpop-go/logging"
-	"github.com/uber/ringpop-go/shared"
+	"github.com/gl-works/ringpop-go/logging"
+	"github.com/gl-works/ringpop-go/shared"
 	"github.com/uber/tchannel-go/json"
 )
 

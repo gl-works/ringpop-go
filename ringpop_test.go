@@ -27,10 +27,10 @@ import (
 	"github.com/benbjohnson/clock"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"github.com/uber/ringpop-go/events"
-	"github.com/uber/ringpop-go/forward"
-	"github.com/uber/ringpop-go/swim"
-	"github.com/uber/ringpop-go/test/mocks"
+	"github.com/gl-works/ringpop-go/events"
+	"github.com/gl-works/ringpop-go/forward"
+	"github.com/gl-works/ringpop-go/swim"
+	"github.com/gl-works/ringpop-go/test/mocks"
 	"github.com/uber/tchannel-go"
 )
 

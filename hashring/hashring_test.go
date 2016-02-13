@@ -28,7 +28,7 @@ import (
 	"testing"
 
 	"github.com/dgryski/go-farm"
-	"github.com/uber/ringpop-go/events"
+	"github.com/gl-works/ringpop-go/events"
 
 	"github.com/stretchr/testify/assert"
 )

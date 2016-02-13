@@ -24,7 +24,7 @@ import (
 	"math/rand"
 	"sync"
 
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/util"
 )
 
 const (

@@ -34,7 +34,7 @@ v0.2
 
 There are a significant number of breaking changes in this release:
 
-* Ringpop constructor has been renamed from `Ringpop.NewRingpop` to `ringpop.New(app string, opts ...Option)` and now accepts optional functional arguments. See the [package documentation](https://godoc.org/github.com/uber/ringpop-go#Option) for a list of options.
+* Ringpop constructor has been renamed from `Ringpop.NewRingpop` to `ringpop.New(app string, opts ...Option)` and now accepts optional functional arguments. See the [package documentation](https://godoc.org/github.com/gl-works/ringpop-go#Option) for a list of options.
 * `ringpop.Bootstrap` now accepts `swim.BootstrapOptions`. `ringpop.BootstrapOptions` has been removed.
 * Many public methods now return an error if they are called before the ring is bootstrapped. Signatures for the changed methods are:
     * `Bootstrap(opts *swim.BootstrapOptions) ([]string, error)`

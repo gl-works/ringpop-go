@@ -25,7 +25,7 @@ import (
 	"sync"
 
 	log "github.com/uber-common/bark"
-	"github.com/uber/ringpop-go/logging"
+	"github.com/gl-works/ringpop-go/logging"
 )
 
 var log10 = math.Log(10)

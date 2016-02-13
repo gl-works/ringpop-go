@@ -29,8 +29,8 @@ import (
 	"github.com/benbjohnson/clock"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/uber/ringpop-go/shared"
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/shared"
+	"github.com/gl-works/ringpop-go/util"
 	"github.com/uber/tchannel-go"
 )
 

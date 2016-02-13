@@ -26,9 +26,9 @@ import (
 	"time"
 
 	"github.com/uber-common/bark"
-	"github.com/uber/ringpop-go/events"
-	"github.com/uber/ringpop-go/swim"
-	"github.com/uber/ringpop-go/util"
+	"github.com/gl-works/ringpop-go/events"
+	"github.com/gl-works/ringpop-go/swim"
+	"github.com/gl-works/ringpop-go/util"
 )
 
 // fake stats

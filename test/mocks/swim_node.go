@@ -1,6 +1,6 @@
 package mocks
 
-import "github.com/uber/ringpop-go/swim"
+import "github.com/gl-works/ringpop-go/swim"
 import "github.com/stretchr/testify/mock"
 
 type SwimNode struct {

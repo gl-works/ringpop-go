@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/uber/ringpop-go",
+	"ImportPath": "github.com/gl-works/ringpop-go",
 	"GoVersion": "go1.5.1",
 	"Packages": [
 		"./..."

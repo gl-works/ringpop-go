@@ -28,7 +28,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/uber/ringpop-go/events"
+	"github.com/gl-works/ringpop-go/events"
 
 	"github.com/dgryski/go-farm"
 )

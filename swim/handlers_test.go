@@ -31,9 +31,9 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 	"github.com/uber-common/bark"
-	"github.com/uber/ringpop-go/logging"
-	"github.com/uber/ringpop-go/shared"
-	"github.com/uber/ringpop-go/swim/test/mocks"
+	"github.com/gl-works/ringpop-go/logging"
+	"github.com/gl-works/ringpop-go/shared"
+	"github.com/gl-works/ringpop-go/swim/test/mocks"
 	"github.com/uber/tchannel-go"
 )
 
